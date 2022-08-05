@@ -2,21 +2,74 @@ import { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import useDate from "../hooks/useDate";
 import useBaseTime from "../hooks/useBaseTime";
+import HourlyForecast, { Item } from "./HourlyForecast";
 
 // 타입스크립트에서는 Object 에 들어갈 값들의 타입을 미리 지정해줘야한다.
 // Object에 어떤 타입이 들어가는지 아는 경우에는 key: type; 으로 해주고
 // 만약 모른다면 [key: string]: any; 이렇게 지정해준다.
 
-interface Item {
-  baseDate: string;
-  baseTime: string;
-  category: string;
-  fcstDate: string;
-  fcstTime: string;
-  fcstValue: string;
-  nx: number;
-  ny: number;
-}
+const mockData: Item[] = [
+  {
+    baseDate: "20220805",
+    baseTime: "1430",
+    category: "PTY",
+    fcstDate: "20220805",
+    fcstTime: "1500",
+    fcstValue: "0",
+    nx: 60,
+    ny: 127,
+  },
+  {
+    baseDate: "20220805",
+    baseTime: "1430",
+    category: "PTY",
+    fcstDate: "20220805",
+    fcstTime: "1500",
+    fcstValue: "0",
+    nx: 60,
+    ny: 127,
+  },
+  {
+    baseDate: "20220805",
+    baseTime: "1430",
+    category: "PTY",
+    fcstDate: "20220805",
+    fcstTime: "1500",
+    fcstValue: "0",
+    nx: 60,
+    ny: 127,
+  },
+  {
+    baseDate: "20220805",
+    baseTime: "1430",
+    category: "PTY",
+    fcstDate: "20220805",
+    fcstTime: "1500",
+    fcstValue: "0",
+    nx: 60,
+    ny: 127,
+  },
+  {
+    baseDate: "20220805",
+    baseTime: "1430",
+    category: "PTY",
+    fcstDate: "20220805",
+    fcstTime: "1500",
+    fcstValue: "1",
+    nx: 60,
+    ny: 127,
+  },
+  {
+    baseDate: "20220805",
+    baseTime: "1430",
+    category: "PTY",
+    fcstDate: "20220805",
+    fcstTime: "1500",
+    fcstValue: "0",
+    nx: 60,
+    ny: 127,
+  },
+];
 
 export interface FetchData {
   response: {
@@ -33,7 +86,8 @@ export interface FetchData {
 
 function Forecast() {
   // typescript에서 useState를 빈배열로 초기화시키면 never type으로 인식이 되기 때문에 구체적인 타입을 지정해줘야한다.
-  const [forecast, setForecast] = useState<Item[]>([]);
+  const [pty, setPty] = useState<Item[]>([]);
+  const [rn1, setRn1] = useState<Item[]>([]);
   const [url, setUrl] = useState<string>("");
   const baseDate = useDate();
   const baseTime = useBaseTime();
@@ -45,12 +99,18 @@ function Forecast() {
   useEffect(() => {
     if (!error) {
       const items = data.response.body.items.item;
-      setForecast(
+      setPty(
         items.filter(
-          (item) =>
-            item.category === "PTY" ||
-            item.category === "RN1" ||
-            item.category === "SKY"
+          (item) => item.category === "PTY" /*||
+          item.category === "RN1" ||
+          item.category === "SKY"*/
+        )
+      );
+      setRn1(
+        items.filter(
+          (item) => item.category === "RN1" /*||
+          item.category === "RN1" ||
+          item.category === "SKY"*/
         )
       );
     }
@@ -65,7 +125,20 @@ function Forecast() {
       );
     }
   }, [baseTime, baseDate]);
-  return <div>Forecast</div>;
+  return (
+    <div>
+      <span>
+        {pty.every((item) => item.fcstValue === "0")
+          ? "외출 시 우산은 필요없습니다"
+          : "외출 시 우산을 챙겨주세요!"}
+      </span>
+      <div>
+        {rn1.map((item, index) => {
+          return <HourlyForecast key={index} {...item} />;
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default Forecast;
