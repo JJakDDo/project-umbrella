@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-function useDate(): string {
-  const [date, setDate] = useState<string>("");
+function useDate() {
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     const today = new Date();

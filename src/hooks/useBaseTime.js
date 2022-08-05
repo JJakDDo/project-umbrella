@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-function useBaseTime(): string {
-  const [baseTime, setBaseTime] = useState<string>("");
+function useBaseTime() {
+  const [baseTime, setBaseTime] = useState("");
 
   useEffect(() => {
     const date = new Date();

@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import { FetchData } from "../components/Forecast";
 
-function useFetch(url: string): [boolean, FetchData] {
+function useFetch(url) {
   // Type에 지정한 키값에 맞게 초기화 시켜준다.
-  const [data, setData] = useState<FetchData>({
-    response: { body: { items: { item: [] } }, header: { resultCode: "" } },
-  });
+  const [data, setData] = useState({});
   const [error, setError] = useState(true);
 
   useEffect(() => {
@@ -14,7 +11,7 @@ function useFetch(url: string): [boolean, FetchData] {
         .then((res) => {
           return res.json();
         })
-        .then((data: FetchData) => {
+        .then((data) => {
           if (data.response.header.resultCode === "00") {
             setData(data);
             setError(false);
