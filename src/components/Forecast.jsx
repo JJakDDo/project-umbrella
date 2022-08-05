@@ -3,6 +3,10 @@ import useFetch from "../hooks/useFetch";
 import useDate from "../hooks/useDate";
 import useBaseTime from "../hooks/useBaseTime";
 
+import HourlyForecast from "./HourlyForecast";
+
+import { HourlyForecastContainer } from "../styles/Forecast.styled";
+
 function Forecast() {
   // typescript에서 useState를 빈배열로 초기화시키면 never type으로 인식이 되기 때문에 구체적인 타입을 지정해줘야한다.
   const [forecast, setForecast] = useState([]);
@@ -46,6 +50,11 @@ function Forecast() {
       {pty.every((item) => item.fcstValue === "0")
         ? "외출 시 우산은 필요없습니다!"
         : "외출 시 우산을 챙기세요!"}
+      <HourlyForecastContainer>
+        {rn1.map((item, index) => {
+          return <HourlyForecast key={index} {...item} />;
+        })}
+      </HourlyForecastContainer>
     </div>
   );
 }
