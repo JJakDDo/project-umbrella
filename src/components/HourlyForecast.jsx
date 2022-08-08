@@ -21,6 +21,7 @@ function HourlyForecast({
     canvas.width = 100;
     canvas.height = 350;
     setCtx(canvas.getContext("2d"));
+    console.log(fcstValue);
   }, []);
 
   useEffect(() => {

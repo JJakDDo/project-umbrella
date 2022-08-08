@@ -13,6 +13,7 @@ function Forecast() {
   const [pty, setPty] = useState([]);
   const [rn1, setRn1] = useState([]);
   const [url, setUrl] = useState("");
+  const [showMore, setShowMore] = useState(false);
   const baseDate = useDate();
   const baseTime = useBaseTime();
 
@@ -50,12 +51,14 @@ function Forecast() {
       {pty.every((item) => item.fcstValue === "0")
         ? "외출 시 우산은 필요없습니다!"
         : "외출 시 우산을 챙기세요!"}
-      <div>자세히보기</div>
-      <HourlyForecastContainer>
-        {rn1.map((item, index) => {
-          return <HourlyForecast key={index} {...item} />;
-        })}
-      </HourlyForecastContainer>
+      <div onClick={() => setShowMore(true)}>자세히보기</div>
+      {showMore && (
+        <HourlyForecastContainer>
+          {rn1.map((item, index) => {
+            return <HourlyForecast key={index} {...item} />;
+          })}
+        </HourlyForecastContainer>
+      )}
     </div>
   );
 }
