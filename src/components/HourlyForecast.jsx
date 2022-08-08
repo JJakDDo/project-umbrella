@@ -25,10 +25,26 @@ function HourlyForecast({
 
   useEffect(() => {
     if (ctx) {
-      console.log(canvasRef.current.width);
       ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      const height = canvasRef.current.height;
+      if (fcstValue === "강수없음") {
+        ctx.fillRect(0, 350, 100, 0);
+        return;
+      }
+      const fcstTemp = Number(fcstValue.split(".")[0]);
       ctx.fillStyle = "#00c7eb";
-      ctx.fillRect(0, 250, 100, 100);
+      if (fcstTemp === 50) {
+        ctx.fillRect(0, 20, 100, 330);
+      } else if (fcstTemp === 30) {
+        ctx.fillRect(0, 59, 100, 291);
+      } else {
+        ctx.fillRect(
+          0,
+          height - 10 * fcstTemp,
+          100,
+          height - (height - 10 * fcstTemp)
+        );
+      }
     }
   }, [ctx]);
 

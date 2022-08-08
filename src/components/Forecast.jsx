@@ -50,6 +50,7 @@ function Forecast() {
       {pty.every((item) => item.fcstValue === "0")
         ? "외출 시 우산은 필요없습니다!"
         : "외출 시 우산을 챙기세요!"}
+      <div>자세히보기</div>
       <HourlyForecastContainer>
         {rn1.map((item, index) => {
           return <HourlyForecast key={index} {...item} />;
