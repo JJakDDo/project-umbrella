@@ -39,3 +39,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.OUTLINE {
+  stroke-linejoin: round;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+.OUTLINE:hover {
+  filter: url(#glow);
+}
