@@ -7,24 +7,29 @@ import { seoulData } from "../data/seoul";
 
 import Path from "./Path";
 
+import { MapSvg, MapG } from "../styles/Map";
+
 // * 서울시 지도 svg 파일 출처:
 // http://www.gisdeveloper.co.kr/?p=8555
 
 const Seoul = () => {
   const svgRef = useRef(null);
   const [fcstData, setFcstData] = useState([...seoulData]);
+  const [selectedMapId, setSelectedMapId] = useState("");
+  const [transforms, setTransforms] = useState({});
+  const [svgBBox, setSvgBBox] = useState({});
   const baseDate = useDate();
   const baseTime = useBaseTime();
 
-  const changeRenderOrder = (id) => {
-    const index = fcstData.findIndex((data) => data.id === id);
-    const tempFcst = [...fcstData];
-    const lastIndex = tempFcst.length - 1;
-    const temp = tempFcst[lastIndex];
-    tempFcst[lastIndex] = tempFcst[index];
-    tempFcst[index] = temp;
-    setFcstData(tempFcst);
-  };
+  // const changeRenderOrder = (id) => {
+  //   const index = fcstData.findIndex((data) => data.id === id);
+  //   const tempFcst = [...fcstData];
+  //   const lastIndex = tempFcst.length - 1;
+  //   const temp = tempFcst[lastIndex];
+  //   tempFcst[lastIndex] = tempFcst[index];
+  //   tempFcst[index] = temp;
+  //   setFcstData(tempFcst);
+  // };
 
   const fetchData = async (url) => {
     const data = await axios.get(url);
@@ -35,7 +40,7 @@ const Seoul = () => {
         if (header.resultCode === "00") {
           console.log(body);
           response(
-            body.items.item.filter((item) => item.category === "PTY")[0]
+            body.items.item.filter((item) => item.category === "PTY")[1]
               .fcstValue
           );
         }
@@ -59,7 +64,7 @@ const Seoul = () => {
     }
     setFcstData(
       seoulData.map((data, index) => {
-        return { ...data, fcst: results[index] };
+        return { ...data, isSelected: undefined, fcst: results[index] };
       })
     );
   };
@@ -68,20 +73,21 @@ const Seoul = () => {
     //batchFetch();
   }, [baseDate, baseTime]);
 
+  useEffect(() => {
+    setSvgBBox(svgRef.current.getBBox());
+  }, [svgRef]);
+
   return (
     <>
       <p>
         기준 시간: {baseDate} {baseTime}
       </p>
       <button onClick={batchFetch}>데이터 가져오기</button>
-      <svg
-        style={{
-          background: "#242424",
-          overflow: "visible",
-          height: "650px",
-          width: "800px",
-        }}
+      <MapSvg
         xmlns='http://www.w3.org/2000/svg'
+        transform='translate(0,0)scale(1,1)'
+        viewBox='67 55 666 546'
+        preserveAspectRatio='xMidYMid meet'
         ref={svgRef}
       >
         <defs>
@@ -102,7 +108,7 @@ const Seoul = () => {
             </feMerge>
           </filter>
           {/*glow 효과
-          // https://gist.github.com/lukeeey/fe79f682d06056205e1907a350c15524*/}
+          // https://gist.github.com/lukeeey/fe79f682d06056205e1907a350c15524
 
           <filter id='glow' height='300%' width='300%' x='-75%' y='-75%'>
             <feMorphology
@@ -124,25 +130,45 @@ const Seoul = () => {
               <feMergeNode in='SourceGraphic' />
             </feMerge>
           </filter>
+          */}
+          <pattern
+            id='diagonalHatch'
+            patternUnits='userSpaceOnUse'
+            width='4'
+            height='4'
+          >
+            <path
+              d='M-1,1 l2,-2
+           M0,4 l4,-4
+           M3,5 l2,-2'
+              style={{ stroke: "black", strokeWidth: "1" }}
+            />
+          </pattern>
         </defs>
-        <g filter='url(#dropshadow)'>
+        <MapG
+          transform={
+            transforms.translate
+              ? `translate(${transforms.translate}) scale(${transforms.scale})`
+              : "translate(0,0) scale(1,1)"
+          }
+          filter='url(#dropshadow)'
+        >
           {fcstData.map((data) => {
             return (
               <Path
                 key={data.id}
-                id={data.id}
-                name={data.name}
-                d={data.d}
-                tx={data.tx}
-                ty={data.ty}
-                fcst={data.fcst}
-                changeRenderOrder={changeRenderOrder}
+                {...data}
+                baseDate={baseDate}
+                baseTime={baseTime}
+                setTransforms={setTransforms}
+                svgBBox={svgBBox}
+                selectedMapId={selectedMapId}
+                setSelectedMapId={setSelectedMapId}
               />
             );
           })}
-        </g>
-        <g filter='url(#dropshadow2)'></g>
-      </svg>
+        </MapG>
+      </MapSvg>
     </>
   );
 };

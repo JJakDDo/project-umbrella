@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -38,14 +44,4 @@
 
 .read-the-docs {
   color: #888;
-}
-
-.OUTLINE {
-  stroke-linejoin: round;
-  stroke: #ffffff;
-  stroke-width: 1;
-}
-
-.OUTLINE:hover {
-  filter: url(#glow);
 }
