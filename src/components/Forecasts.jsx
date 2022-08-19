@@ -13,7 +13,14 @@ const Forecasts = ({ fcstData }) => {
   return (
     <ForecastContainer>
       {ptyData.map((elem, index) => {
-        return <HourlyForecast key={index} pty={elem} sky={skyData[index]} />;
+        return (
+          <HourlyForecast
+            key={index}
+            pty={elem}
+            sky={skyData[index]}
+            index={index}
+          />
+        );
       })}
     </ForecastContainer>
   );

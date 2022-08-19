@@ -11,7 +11,7 @@ import partlyCloudyNight from "/public/partly_cloudy_night.json";
 import { useEffect } from "react";
 
 const WeatherAnimation = ({ ptyValue, skyValue, time }) => {
-  const [animation, setAnimation] = useState(sunny);
+  const [animation, setAnimation] = useState();
 
   useEffect(() => {
     const hour = Number(time.slice(0, 2));

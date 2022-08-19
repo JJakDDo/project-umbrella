@@ -1,4 +1,22 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
+
+const entranceAnimation = keyframes`
+  60%{
+    transform: translateY(30px);
+  }
+  70%{
+    transform: translateY(70px);
+  }
+  80%{
+    transform: translateY(45px);
+  }
+  90%{
+    transform: translateY(55px);
+  }
+  100%{
+    transform: translateY(50px);
+  }
+`;
 
 export const HourlyForecastContainer = styled.div`
   display: flex;
@@ -8,17 +26,28 @@ export const HourlyForecastContainer = styled.div`
   gap: 20px;
 `;
 
+export const Wrapper = styled.div`
+  position: relative;
+`;
+
 export const HourlyContainer = styled.div`
+  top: 0;
+  left: 0;
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  width: 180px;
   height: 230px;
   background-color: #1a1a1a;
   border-radius: 20px;
   border: 3px solid #eaeaea;
+  gap: 20px;
+  transform: translateY(700px);
+  animation: ${({ delay }) =>
+    css`
+      ${entranceAnimation} 0.7s ease-out forwards ${delay}s;
+    `};
 `;
 
 export const Bar = styled.div`
@@ -36,6 +65,7 @@ export const ForecastContainer = styled.div`
   transform: translate(-50%, -50%);
   display: flex;
   width: 90vw;
+  height: 250px;
   justify-content: space-around;
   align-items: center;
   gap: 20px;
