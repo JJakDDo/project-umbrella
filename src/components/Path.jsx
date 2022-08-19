@@ -14,12 +14,15 @@ const Path = ({
   ty,
   baseDate,
   baseTime,
+  setFcstData,
   setTransforms,
   svgBBox,
   setSelectedMapId,
   selectedMapId,
+  setShowForecast,
 }) => {
   const [fcstValue, setFcstValue] = useState("");
+  const [opacity, setOpacity] = useState(1);
   const transformX = useRef(0);
   const transformY = useRef(0);
 
@@ -28,9 +31,10 @@ const Path = ({
     const header = data.data.response.header;
     const body = data.data.response.body;
     if (header.resultCode === "00") {
-      console.log(body);
-      setFcstValue(
-        body.items.item.filter((item) => item.category === "PTY")[1].fcstValue
+      setFcstData(
+        body.items.item.filter(
+          (item) => item.category === "PTY" || item.category === "SKY"
+        )
       );
     }
   };
@@ -51,10 +55,16 @@ const Path = ({
           import.meta.env.VITE_KEY
         }&pageNo=1&numOfRows=24&dataType=JSON&base_date=${baseDate}&base_time=${baseTime}&nx=${x}&ny=${y}`
       );
+      setTimeout(() => {
+        setOpacity(0.2);
+        setShowForecast(true);
+      }, 1000);
     } else {
       setTransforms({ scale: 1 });
       setSelectedMapId("");
       setFcstValue("");
+      setOpacity(1);
+      setShowForecast(false);
     }
   };
 
@@ -63,13 +73,14 @@ const Path = ({
       <MapPath
         id={`${id}`}
         d={d}
+        zoomed={selectedMapId !== ""}
+        opacity={opacity}
         animation={selectedMapId === "" || id === selectedMapId}
         onClick={onClickHandler}
       ></MapPath>
       <MapText animation={selectedMapId === ""} x={tx} y={ty}>
         {name}
       </MapText>
-
       {selectedMapId !== "" && <WeatherIcon fcst={fcstValue} tx={tx} ty={ty} />}
     </>
   );

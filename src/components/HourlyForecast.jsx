@@ -1,60 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import { Bar, HourlyContainer } from "../styles/Forecast.styled";
+import WeatherAnimation from "./WeatherAnimation";
 
-function HourlyForecast({
-  baseDate,
-  baseTime,
-  category,
-  fcstDate,
-  fcstTime,
-  fcstValue,
-  nx,
-  ny,
-}) {
-  const [ctx, setCtx] = useState(null);
-  const canvasRef = useRef(null);
+function HourlyForecast({ pty, sky }) {
+  const [timeStr, setTimeStr] = useState("");
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    //canvas사이즈를 css에서 리사이즈하게되면 스케일까지 바뀌게된다.
-    //그래서 js에서 직접 width와 height를 지정해준다.
-    canvas.width = 100;
-    canvas.height = 350;
-    setCtx(canvas.getContext("2d"));
-    console.log(fcstValue);
-  }, []);
-
-  useEffect(() => {
-    if (ctx) {
-      ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-      const height = canvasRef.current.height;
-      if (fcstValue === "강수없음") {
-        ctx.fillRect(0, 350, 100, 0);
-        return;
-      }
-      const fcstTemp = Number(fcstValue.split(".")[0]);
-      ctx.fillStyle = "#00c7eb";
-      if (fcstTemp === 50) {
-        ctx.fillRect(0, 20, 100, 330);
-      } else if (fcstTemp === 30) {
-        ctx.fillRect(0, 59, 100, 291);
-      } else {
-        ctx.fillRect(
-          0,
-          height - 10 * fcstTemp,
-          100,
-          height - (height - 10 * fcstTemp)
-        );
-      }
+  const convertTimeToString = (time) => {
+    const hour = Number(time.slice(0, 2));
+    if (hour < 12) {
+      setTimeStr(`오전 ${hour}시`);
+      return;
     }
-  }, [ctx]);
 
+    setTimeStr(`오후 ${hour - 12}시`);
+  };
+
+  useEffect(() => {
+    convertTimeToString(pty.fcstTime);
+  }, []);
   return (
     <HourlyContainer>
-      <Bar>
-        <canvas ref={canvasRef}></canvas>
-      </Bar>
-      <span>{fcstTime.slice(0, 2)} 시</span>
+      <WeatherAnimation
+        ptyValue={pty?.fcstValue}
+        skyValue={sky?.fcstValue}
+        time={pty?.fcstTime}
+      />
+      <span>{timeStr}</span>
     </HourlyContainer>
   );
 }

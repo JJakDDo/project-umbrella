@@ -8,16 +8,18 @@ import { seoulData } from "../data/seoul";
 import Path from "./Path";
 
 import { MapSvg, MapG } from "../styles/Map";
+import Forecasts from "./Forecasts";
 
 // * 서울시 지도 svg 파일 출처:
 // http://www.gisdeveloper.co.kr/?p=8555
 
 const Seoul = () => {
   const svgRef = useRef(null);
-  const [fcstData, setFcstData] = useState([...seoulData]);
+  const [fcstData, setFcstData] = useState([]);
   const [selectedMapId, setSelectedMapId] = useState("");
   const [transforms, setTransforms] = useState({});
   const [svgBBox, setSvgBBox] = useState({});
+  const [showForecast, setShowForecast] = useState(false);
   const baseDate = useDate();
   const baseTime = useBaseTime();
 
@@ -82,7 +84,6 @@ const Seoul = () => {
       <p>
         기준 시간: {baseDate} {baseTime}
       </p>
-      <button onClick={batchFetch}>데이터 가져오기</button>
       <MapSvg
         xmlns='http://www.w3.org/2000/svg'
         transform='translate(0,0)scale(1,1)'
@@ -153,22 +154,25 @@ const Seoul = () => {
           }
           filter='url(#dropshadow)'
         >
-          {fcstData.map((data) => {
+          {seoulData.map((data) => {
             return (
               <Path
                 key={data.id}
                 {...data}
                 baseDate={baseDate}
                 baseTime={baseTime}
+                setFcstData={setFcstData}
                 setTransforms={setTransforms}
                 svgBBox={svgBBox}
                 selectedMapId={selectedMapId}
                 setSelectedMapId={setSelectedMapId}
+                setShowForecast={setShowForecast}
               />
             );
           })}
         </MapG>
       </MapSvg>
+      {showForecast && <Forecasts fcstData={fcstData} />}
     </>
   );
 };

@@ -14,24 +14,25 @@ export const MapSvg = styled.svg`
 `;
 
 export const MapG = styled.g`
-  transition: transform 0.5s linear;
+  transition: all 0.5s linear;
 `;
 
 export const MapPath = styled.path`
   stroke-linejoin: round;
   stroke: #ffffff;
   stroke-width: 1;
-  fill: url(#diagonalHatch);
+  fill: ${({ zoomed }) => (zoomed ? "black" : css`url(#diagonalHatch)`)};
   animation: ${({ animation }) =>
     !animation
       ? css`
           ${disappear} 0.5s linear forwards;
         `
       : ""};
-
+  opacity: ${({ opacity }) => opacity};
   &:hover {
     fill: black;
   }
+  transition: opacity 0.5s linear;
 `;
 
 export const MapText = styled.text`
