@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Lottie from "react-lottie-player";
 
-import sunny from "/public/sunny.json";
-import night from "/public/night.json";
-import cloudy from "/public/cloudy.json";
-import rainNight from "/public/rain_night.json";
-import rainDay from "/public/rain_day.json";
-import partlyCloudyDay from "/public/partly_cloudy_day.json";
-import partlyCloudyNight from "/public/partly_cloudy_night.json";
+import sunny from "../assets/sunny.json";
+import night from "../assets/night.json";
+import cloudy from "../assets/cloudy.json";
+import rainNight from "../assets/rain_night.json";
+import rainDay from "../assets/rain_day.json";
+import partlyCloudyDay from "../assets/partly_cloudy_day.json";
+import partlyCloudyNight from "../assets/partly_cloudy_night.json";
 import { useEffect } from "react";
 
 const WeatherAnimation = ({ ptyValue, skyValue, time }) => {

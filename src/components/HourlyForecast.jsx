@@ -1,26 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { Wrapper, Bar, HourlyContainer } from "../styles/Forecast.styled";
+import { HourlyContainer } from "../styles/Forecast.styled";
 import WeatherAnimation from "./WeatherAnimation";
+import useConversion from "../hooks/useConversion";
 
 function HourlyForecast({ pty, sky, index }) {
-  const [timeStr, setTimeStr] = useState("");
+  const [timeStr] = useConversion(pty.fcstTime);
 
-  const convertTimeToString = (time) => {
-    const hour = Number(time.slice(0, 2));
-    if (hour === 18) {
-      setStyles(true);
-    }
-    if (hour < 12) {
-      setTimeStr(`오전 ${hour}시`);
-      return;
-    }
-
-    setTimeStr(`오후 ${hour - 12}시`);
-  };
-
-  useEffect(() => {
-    convertTimeToString(pty.fcstTime);
-  }, []);
   return (
     <HourlyContainer delay={index * 0.1}>
       <WeatherAnimation

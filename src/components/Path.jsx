@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import axios from "axios";
 
 import { MapPath, MapText } from "../styles/Map";
-import WeatherIcon from "./WeatherIcon";
 const Path = ({
   id,
   d,
@@ -21,7 +20,6 @@ const Path = ({
   selectedMapId,
   setShowForecast,
 }) => {
-  const [fcstValue, setFcstValue] = useState("");
   const [opacity, setOpacity] = useState(1);
   const transformX = useRef(0);
   const transformY = useRef(0);
@@ -62,7 +60,6 @@ const Path = ({
     } else {
       setTransforms({ scale: 1 });
       setSelectedMapId("");
-      setFcstValue("");
       setOpacity(1);
       setShowForecast(false);
     }
@@ -81,7 +78,6 @@ const Path = ({
       <MapText animation={selectedMapId === ""} x={tx} y={ty}>
         {name}
       </MapText>
-      {selectedMapId !== "" && <WeatherIcon fcst={fcstValue} tx={tx} ty={ty} />}
     </>
   );
 };

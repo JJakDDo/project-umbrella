@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import axios from "axios";
 import useDate from "../hooks/useDate";
 import useBaseTime from "../hooks/useBaseTime";
 import { seoulData } from "../data/seoul";
@@ -22,58 +21,6 @@ const Seoul = () => {
   const [showForecast, setShowForecast] = useState(false);
   const baseDate = useDate();
   const baseTime = useBaseTime();
-
-  // const changeRenderOrder = (id) => {
-  //   const index = fcstData.findIndex((data) => data.id === id);
-  //   const tempFcst = [...fcstData];
-  //   const lastIndex = tempFcst.length - 1;
-  //   const temp = tempFcst[lastIndex];
-  //   tempFcst[lastIndex] = tempFcst[index];
-  //   tempFcst[index] = temp;
-  //   setFcstData(tempFcst);
-  // };
-
-  const fetchData = async (url) => {
-    const data = await axios.get(url);
-    const header = data.data.response.header;
-    const body = data.data.response.body;
-    if (header.resultCode === "00") {
-      return new Promise((response, reject) => {
-        if (header.resultCode === "00") {
-          console.log(body);
-          response(
-            body.items.item.filter((item) => item.category === "PTY")[1]
-              .fcstValue
-          );
-        }
-
-        reject(new Error());
-      });
-    }
-  };
-
-  const batchFetch = async () => {
-    const results = [];
-    for await (const data of seoulData) {
-      const res = await fetchData(
-        `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?ServiceKey=${
-          import.meta.env.VITE_KEY
-        }&pageNo=1&numOfRows=24&dataType=JSON&base_date=${baseDate}&base_time=${baseTime}&nx=${
-          data.x
-        }&ny=${data.y}`
-      );
-      results.push(res);
-    }
-    setFcstData(
-      seoulData.map((data, index) => {
-        return { ...data, isSelected: undefined, fcst: results[index] };
-      })
-    );
-  };
-
-  useEffect(() => {
-    //batchFetch();
-  }, [baseDate, baseTime]);
 
   useEffect(() => {
     setSvgBBox(svgRef.current.getBBox());
