@@ -71,3 +71,11 @@ export const ForecastContainer = styled.div`
   gap: 20px;
   flex-wrap: wrap;
 `;
+
+export const CloseContainer = styled.div`
+  position: absolute;
+  bottom: -200px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+`;

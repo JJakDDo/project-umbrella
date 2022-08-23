@@ -19,8 +19,9 @@ const Path = ({
   setSelectedMapId,
   selectedMapId,
   setShowForecast,
+  opacity,
+  setOpacity,
 }) => {
-  const [opacity, setOpacity] = useState(1);
   const transformX = useRef(0);
   const transformY = useRef(0);
 
@@ -57,11 +58,6 @@ const Path = ({
         setOpacity(0.2);
         setShowForecast(true);
       }, 1000);
-    } else {
-      setTransforms({ scale: 1 });
-      setSelectedMapId("");
-      setOpacity(1);
-      setShowForecast(false);
     }
   };
 

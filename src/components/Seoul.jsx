@@ -19,6 +19,7 @@ const Seoul = () => {
   const [transforms, setTransforms] = useState({});
   const [svgBBox, setSvgBBox] = useState({});
   const [showForecast, setShowForecast] = useState(false);
+  const [opacity, setOpacity] = useState(1);
   const baseDate = useDate();
   const baseTime = useBaseTime();
 
@@ -108,6 +109,8 @@ const Seoul = () => {
                 {...data}
                 baseDate={baseDate}
                 baseTime={baseTime}
+                opacity={opacity}
+                setOpacity={setOpacity}
                 setFcstData={setFcstData}
                 setTransforms={setTransforms}
                 svgBBox={svgBBox}
@@ -119,7 +122,16 @@ const Seoul = () => {
           })}
         </MapG>
       </MapSvg>
-      {showForecast && <Forecasts fcstData={fcstData} />}
+      {showForecast && (
+        <Forecasts
+          fcstData={fcstData}
+          setTransforms={setTransforms}
+          setOpacity={setOpacity}
+          selectedMapId={selectedMapId}
+          setSelectedMapId={setSelectedMapId}
+          setShowForecast={setShowForecast}
+        />
+      )}
     </>
   );
 };
