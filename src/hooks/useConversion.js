@@ -10,9 +10,6 @@ const useConversion = (time) => {
 
   const convertTimeToString = (time) => {
     const hour = Number(time.slice(0, 2));
-    if (hour === 18) {
-      setStyles(true);
-    }
     if (hour < 12) {
       setTimeStr(`오전 ${hour}시`);
       return;
@@ -23,7 +20,7 @@ const useConversion = (time) => {
 
   useEffect(() => {
     convertTimeToString(time);
-  }, []);
+  }, [time]);
 
   return [timeStr];
 };
