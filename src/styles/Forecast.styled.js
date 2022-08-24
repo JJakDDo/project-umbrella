@@ -74,7 +74,15 @@ export const ForecastContainer = styled.div`
 
 export const CloseContainer = styled.div`
   position: absolute;
-  bottom: -200px;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+`;
+
+export const Title = styled.div`
+  position: absolute;
+  top: 180px;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 3rem;

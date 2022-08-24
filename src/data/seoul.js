@@ -1,6 +1,6 @@
 export const seoulData = [
   {
-    id: "11110",
+    id: "0",
     name: "종로구",
     x: "60",
     y: "127",
@@ -9,7 +9,7 @@ export const seoulData = [
     ty: "285",
   },
   {
-    id: "11140",
+    id: "1",
     name: "중구",
     x: "60",
     y: "115",
@@ -18,7 +18,7 @@ export const seoulData = [
     ty: "340",
   },
   {
-    id: "11170",
+    id: "2",
     name: "용산구",
     x: "60",
     y: "126",
@@ -27,7 +27,7 @@ export const seoulData = [
     ty: "400",
   },
   {
-    id: "11200",
+    id: "3",
     name: "성동구",
     x: "61",
     y: "127",
@@ -36,7 +36,7 @@ export const seoulData = [
     ty: "360",
   },
   {
-    id: "11215",
+    id: "4",
     name: "광진구",
     x: "62",
     y: "126",
@@ -45,7 +45,7 @@ export const seoulData = [
     ty: "365",
   },
   {
-    id: "11230",
+    id: "5",
     name: "동대문구",
     x: "61",
     y: "127",
@@ -54,7 +54,7 @@ export const seoulData = [
     ty: "300",
   },
   {
-    id: "11260",
+    id: "6",
     name: "중랑구",
     x: "62",
     y: "128",
@@ -63,7 +63,7 @@ export const seoulData = [
     ty: "270",
   },
   {
-    id: "11290",
+    id: "7",
     name: "성북구",
     x: "61",
     y: "127",
@@ -72,7 +72,7 @@ export const seoulData = [
     ty: "258",
   },
   {
-    id: "11305",
+    id: "8",
     name: "강북구",
     x: "61",
     y: "128",
@@ -81,7 +81,7 @@ export const seoulData = [
     ty: "181",
   },
   {
-    id: "11320",
+    id: "9",
     name: "도봉구",
     x: "61",
     y: "129",
@@ -90,7 +90,7 @@ export const seoulData = [
     ty: "125",
   },
   {
-    id: "11350",
+    id: "10",
     name: "노원구",
     x: "61",
     y: "129",
@@ -99,7 +99,7 @@ export const seoulData = [
     ty: "153",
   },
   {
-    id: "11380",
+    id: "11",
     name: "은평구",
     x: "59",
     y: "127",
@@ -108,7 +108,7 @@ export const seoulData = [
     ty: "225",
   },
   {
-    id: "11410",
+    id: "12",
     name: "서대문구",
     x: "59",
     y: "127",
@@ -117,7 +117,7 @@ export const seoulData = [
     ty: "310",
   },
   {
-    id: "11440",
+    id: "13",
     name: "마포구",
     x: "59",
     y: "127",
@@ -126,7 +126,7 @@ export const seoulData = [
     ty: "340",
   },
   {
-    id: "11470",
+    id: "14",
     name: "양천구",
     x: "58",
     y: "126",
@@ -135,7 +135,7 @@ export const seoulData = [
     ty: "420",
   },
   {
-    id: "11500",
+    id: "15",
     name: "강서구",
     x: "58",
     y: "126",
@@ -144,7 +144,7 @@ export const seoulData = [
     ty: "334",
   },
   {
-    id: "11530",
+    id: "16",
     name: "구로구",
     x: "58",
     y: "125",
@@ -153,7 +153,7 @@ export const seoulData = [
     ty: "465",
   },
   {
-    id: "11545",
+    id: "17",
     name: "금천구",
     x: "59",
     y: "124",
@@ -162,7 +162,7 @@ export const seoulData = [
     ty: "537",
   },
   {
-    id: "11560",
+    id: "18",
     name: "영등포구",
     x: "58",
     y: "126",
@@ -171,7 +171,7 @@ export const seoulData = [
     ty: "415",
   },
   {
-    id: "11590",
+    id: "19",
     name: "동작구",
     x: "59",
     y: "125",
@@ -180,7 +180,7 @@ export const seoulData = [
     ty: "455",
   },
   {
-    id: "11620",
+    id: "20",
     name: "관악구",
     x: "59",
     y: "125",
@@ -189,7 +189,7 @@ export const seoulData = [
     ty: "525",
   },
   {
-    id: "11650",
+    id: "21",
     name: "서초구",
     x: "61",
     y: "125",
@@ -198,7 +198,7 @@ export const seoulData = [
     ty: "500",
   },
   {
-    id: "11680",
+    id: "22",
     name: "강남구",
     x: "61",
     y: "126",
@@ -207,7 +207,7 @@ export const seoulData = [
     ty: "475",
   },
   {
-    id: "11710",
+    id: "23",
     name: "송파구",
     x: "62",
     y: "126",
@@ -216,7 +216,7 @@ export const seoulData = [
     ty: "445",
   },
   {
-    id: "11740",
+    id: "24",
     name: "강동구",
     x: "62",
     y: "126",

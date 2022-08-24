@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 
 import axios from "axios";
+import fetchData from "../utils/fetchData";
 
 import { MapPath, MapText } from "../styles/Map";
 const Path = ({
@@ -25,19 +26,6 @@ const Path = ({
   const transformX = useRef(0);
   const transformY = useRef(0);
 
-  const fetchData = async (url) => {
-    const data = await axios.get(url);
-    const header = data.data.response.header;
-    const body = data.data.response.body;
-    if (header.resultCode === "00") {
-      setFcstData(
-        body.items.item.filter(
-          (item) => item.category === "PTY" || item.category === "SKY"
-        )
-      );
-    }
-  };
-
   const onClickHandler = async (e) => {
     if (selectedMapId === "") {
       const { x: vx, y: vy, width: vw, height: vh } = svgBBox;
@@ -49,11 +37,12 @@ const Path = ({
         scale: 3,
       });
       setSelectedMapId(e.target.id);
-      await fetchData(
+      const data = await fetchData(
         `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?ServiceKey=${
           import.meta.env.VITE_KEY
         }&pageNo=1&numOfRows=24&dataType=JSON&base_date=${baseDate}&base_time=${baseTime}&nx=${x}&ny=${y}`
       );
+      setFcstData(data);
       setTimeout(() => {
         setOpacity(0.2);
         setShowForecast(true);

@@ -27,6 +27,10 @@ const Seoul = () => {
     setSvgBBox(svgRef.current.getBBox());
   }, [svgRef]);
 
+  useEffect(() => {
+    console.log(selectedMapId);
+  }, [selectedMapId]);
+
   return (
     <>
       <p>
@@ -124,12 +128,17 @@ const Seoul = () => {
       </MapSvg>
       {showForecast && (
         <Forecasts
+          baseTime={baseTime}
+          baseDate={baseDate}
           fcstData={fcstData}
+          setFcstData={setFcstData}
           setTransforms={setTransforms}
+          transforms={transforms}
           setOpacity={setOpacity}
           selectedMapId={selectedMapId}
           setSelectedMapId={setSelectedMapId}
           setShowForecast={setShowForecast}
+          svgRef={svgRef}
         />
       )}
     </>
