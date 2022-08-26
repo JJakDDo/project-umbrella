@@ -4,42 +4,36 @@ import {
   ForecastContainer,
   CloseContainer,
   Title,
+  Navigation,
 } from "../styles/Forecast.styled";
 import HourlyForecast from "./HourlyForecast";
 import { IoCloseCircle } from "react-icons/io5";
+import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
 
 import fetchData from "../utils/fetchData";
 import { seoulData } from "../data/seoul";
+import { useContext } from "react";
+import { DataContext } from "../context/DataContext";
 
-const Forecasts = ({
-  baseTime,
-  baseDate,
-  fcstData,
-  setFcstData,
-  setTransforms,
-  setSelectedMapId,
-  setOpacity,
-  setShowForecast,
-  selectedMapId,
-  svgRef,
-  transforms,
-}) => {
+const Forecasts = () => {
+  const {
+    baseTime,
+    baseDate,
+    fcstData,
+    setFcstData,
+    setTransforms,
+    setSelectedMapId,
+    setOpacity,
+    setShowForecast,
+    selectedMapId,
+    svgRef,
+    transforms,
+    selectedMapName,
+    setSelectedMapName,
+  } = useContext(DataContext);
   const [ptyData, setPtyData] = useState([]);
   const [skyData, setSkyData] = useState([]);
   const [buttonPosition, setButtonPosition] = useState({});
-
-  const handleMouseMove = (e) => {
-    console.log(e.target.tagName);
-    const { top, left, width, height } = e.target.getBoundingClientRect();
-    const x = e.pageX - left;
-    const y = e.pageY - top;
-    const centerX = x - width / 2;
-    const centerY = y - height / 2;
-    console.log(x, y);
-    console.log(width, height);
-    console.log(centerX, centerY);
-    setButtonPosition({ centerX, centerY });
-  };
 
   const showFullMap = () => {
     setTransforms({ scale: 1 });
@@ -48,18 +42,19 @@ const Forecasts = ({
     setShowForecast(false);
   };
 
-  const showNextRegion = async () => {
+  const showNextRegion = async (direction) => {
     const currentPath = svgRef.current.getElementById(`${selectedMapId}`);
-    let nextMapId = "0";
-    let nextPath = svgRef.current.getElementById(
-      `${Number(selectedMapId) + 1}`
-    );
-    if (nextPath === null) {
-      nextPath = svgRef.current.getElementById(nextMapId);
-      setSelectedMapId("0");
+    let nextIndex = Number(selectedMapId) + direction;
+    if (nextIndex < 0) {
+      nextIndex = seoulData.length - 1;
+    } else if (nextIndex >= seoulData.length) {
+      nextIndex = 0;
     }
-    nextMapId = Number(selectedMapId) + 1 + "";
-    setSelectedMapId(nextMapId);
+    setSelectedMapId(nextIndex + "");
+
+    const nextPath = svgRef.current.getElementById(`${nextIndex}`);
+
+    // 다음 지역으로 이동하는 애니메이션 로직
     const { x: cx, y: cy, width: cw, height: ch } = currentPath.getBBox();
     const { x: nx, y: ny, width: nw, height: nh } = nextPath.getBBox();
     const transfromX = cx + cw / 2 - (nx + nw / 2);
@@ -73,12 +68,14 @@ const Forecasts = ({
       ],
       scale: 3,
     });
+
+    // 다음 지역의 기상예보 정보 가져오기
     const data = await fetchData(
       `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?ServiceKey=${
         import.meta.env.VITE_KEY
       }&pageNo=1&numOfRows=24&dataType=JSON&base_date=${baseDate}&base_time=${baseTime}&nx=${
-        seoulData[nextMapId].x
-      }&ny=${seoulData[nextMapId].y}`
+        seoulData[nextIndex].x
+      }&ny=${seoulData[nextIndex].y}`
     );
     setFcstData(data);
     setTimeout(() => {
@@ -94,9 +91,15 @@ const Forecasts = ({
 
   return (
     <>
-      <Title>
-        <button onClick={showNextRegion}>다음</button>
-      </Title>
+      <Navigation>
+        <div onClick={() => showNextRegion(-1)}>
+          <MdOutlineNavigateBefore />
+        </div>
+        <p>{seoulData[selectedMapId].name}</p>
+        <div onClick={() => showNextRegion(1)}>
+          <MdOutlineNavigateNext />
+        </div>
+      </Navigation>
       <ForecastContainer>
         {ptyData.map((elem, index) => {
           return (

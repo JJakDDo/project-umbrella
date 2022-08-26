@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { DataContext } from "../context/DataContext";
 
 import useDate from "../hooks/useDate";
 import useBaseTime from "../hooks/useBaseTime";
@@ -19,6 +20,7 @@ const Seoul = () => {
   const [transforms, setTransforms] = useState({});
   const [svgBBox, setSvgBBox] = useState({});
   const [showForecast, setShowForecast] = useState(false);
+  const [selectedMapName, setSelectedMapName] = useState("");
   const [opacity, setOpacity] = useState(1);
   const baseDate = useDate();
   const baseTime = useBaseTime();
@@ -32,10 +34,29 @@ const Seoul = () => {
   }, [selectedMapId]);
 
   return (
-    <>
+    <DataContext.Provider
+      value={{
+        baseDate,
+        baseTime,
+        svgBBox,
+        fcstData,
+        setFcstData,
+        selectedMapId,
+        setSelectedMapId,
+        transforms,
+        setTransforms,
+        setShowForecast,
+        opacity,
+        setOpacity,
+        svgRef,
+        selectedMapName,
+        setSelectedMapName,
+      }}
+    >
       <p>
         기준 시간: {baseDate} {baseTime}
       </p>
+      {showForecast && <Forecasts />}
       <MapSvg
         xmlns='http://www.w3.org/2000/svg'
         transform='translate(0,0)scale(1,1)'
@@ -60,30 +81,6 @@ const Seoul = () => {
               <feMergeNode in='SourceGraphic' />
             </feMerge>
           </filter>
-          {/*glow 효과
-          // https://gist.github.com/lukeeey/fe79f682d06056205e1907a350c15524
-
-          <filter id='glow' height='300%' width='300%' x='-75%' y='-75%'>
-            <feMorphology
-              operator='dilate'
-              radius='4'
-              in='SourceAlpha'
-              result='thicken'
-            />
-            <feGaussianBlur in='thicken' stdDeviation='4' result='blurred' />
-            <feFlood floodColor='#eaeaea' result='glowColor' />
-            <feComposite
-              in='glowColor'
-              in2='blurred'
-              operator='in'
-              result='softGlow_colored'
-            />
-            <feMerge>
-              <feMergeNode in='softGlow_colored' />
-              <feMergeNode in='SourceGraphic' />
-            </feMerge>
-          </filter>
-          */}
           <pattern
             id='diagonalHatch'
             patternUnits='userSpaceOnUse'
@@ -107,41 +104,11 @@ const Seoul = () => {
           filter='url(#dropshadow)'
         >
           {seoulData.map((data) => {
-            return (
-              <Path
-                key={data.id}
-                {...data}
-                baseDate={baseDate}
-                baseTime={baseTime}
-                opacity={opacity}
-                setOpacity={setOpacity}
-                setFcstData={setFcstData}
-                setTransforms={setTransforms}
-                svgBBox={svgBBox}
-                selectedMapId={selectedMapId}
-                setSelectedMapId={setSelectedMapId}
-                setShowForecast={setShowForecast}
-              />
-            );
+            return <Path key={data.id} {...data} />;
           })}
         </MapG>
       </MapSvg>
-      {showForecast && (
-        <Forecasts
-          baseTime={baseTime}
-          baseDate={baseDate}
-          fcstData={fcstData}
-          setFcstData={setFcstData}
-          setTransforms={setTransforms}
-          transforms={transforms}
-          setOpacity={setOpacity}
-          selectedMapId={selectedMapId}
-          setSelectedMapId={setSelectedMapId}
-          setShowForecast={setShowForecast}
-          svgRef={svgRef}
-        />
-      )}
-    </>
+    </DataContext.Provider>
   );
 };
 

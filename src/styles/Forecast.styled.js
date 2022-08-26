@@ -70,6 +70,7 @@ export const ForecastContainer = styled.div`
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
+  z-index: 10;
 `;
 
 export const CloseContainer = styled.div`
@@ -78,6 +79,8 @@ export const CloseContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 3rem;
+  z-index: 10;
+  cursor: pointer;
 `;
 
 export const Title = styled.div`
@@ -86,4 +89,27 @@ export const Title = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 3rem;
+`;
+
+export const Navigation = styled.div`
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  z-index: 15;
+  width: 80vw;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: default;
+
+  font-size: 4rem;
+
+  & > p {
+    font-size: 2rem;
+  }
+
+  & > div {
+    cursor: pointer;
+  }
 `;

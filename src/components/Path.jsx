@@ -4,27 +4,24 @@ import axios from "axios";
 import fetchData from "../utils/fetchData";
 
 import { MapPath, MapText } from "../styles/Map";
-const Path = ({
-  id,
-  d,
-  name,
-  x,
-  y,
-  tx,
-  ty,
-  baseDate,
-  baseTime,
-  setFcstData,
-  setTransforms,
-  svgBBox,
-  setSelectedMapId,
-  selectedMapId,
-  setShowForecast,
-  opacity,
-  setOpacity,
-}) => {
+import { useContext } from "react";
+import { DataContext } from "../context/DataContext";
+const Path = ({ id, d, name, x, y, tx, ty }) => {
   const transformX = useRef(0);
   const transformY = useRef(0);
+  const {
+    baseDate,
+    baseTime,
+    setFcstData,
+    setTransforms,
+    svgBBox,
+    setSelectedMapId,
+    selectedMapId,
+    setShowForecast,
+    opacity,
+    setOpacity,
+    setSelectedMapName,
+  } = useContext(DataContext);
 
   const onClickHandler = async (e) => {
     if (selectedMapId === "") {
@@ -36,7 +33,8 @@ const Path = ({
         translate: [transformX.current, transformY.current],
         scale: 3,
       });
-      setSelectedMapId(e.target.id);
+      setSelectedMapId(id);
+      setSelectedMapName(name);
       const data = await fetchData(
         `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?ServiceKey=${
           import.meta.env.VITE_KEY
