@@ -13,8 +13,8 @@ export const MapSvg = styled.svg`
   transform: translate(-50%, -50%);
   background: #242424;
   overflow: visible;
-  height: 630px;
-  width: 840px;
+  height: 100vh;
+  width: 100vw;
 `;
 
 export const MapG = styled.g`
@@ -51,4 +51,12 @@ export const MapText = styled.text`
           ${disappear} 0.5s linear forwards;
         `
       : ""};
+`;
+
+export const BaseDateText = styled.div`
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
 `;

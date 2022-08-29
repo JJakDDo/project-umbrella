@@ -2,19 +2,19 @@ import styled, { keyframes, css } from "styled-components";
 
 const entranceAnimation = keyframes`
   60%{
-    transform: translateY(-20px);
+    transform: translateY(0px);
   }
   70%{
-    transform: translateY(20px);
+    transform: translateY(40px);
   }
   80%{
-    transform: translateY(-5px);
+    transform: translateY(15px);
   }
   90%{
-    transform: translateY(5px);
+    transform: translateY(25px);
   }
   100%{
-    transform: translateY(0px);
+    transform: translateY(20px);
   }
 `;
 
@@ -68,13 +68,20 @@ export const Bar = styled.div`
 export const ForecastContainer = styled.div`
   display: flex;
   width: 80%;
-  min-height: 250px;
-  max-height: 550px;
+  height: 600px;
   justify-content: space-around;
   align-items: center;
   gap: 20px;
   flex-flow: wrap;
   z-index: 10;
+  overflow: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 export const CloseContainer = styled.div`

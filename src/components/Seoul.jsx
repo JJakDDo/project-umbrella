@@ -7,7 +7,7 @@ import { seoulData } from "../data/seoul";
 
 import Path from "./Path";
 
-import { MapSvg, MapG } from "../styles/Map";
+import { MapSvg, MapG, BaseDateText } from "../styles/Map";
 import Forecasts from "./Forecasts";
 
 // * 서울시 지도 svg 파일 출처:
@@ -27,6 +27,7 @@ const Seoul = () => {
 
   useEffect(() => {
     setSvgBBox(svgRef.current.getBBox());
+    console.log(svgRef.current.getBBox());
   }, [svgRef]);
 
   useEffect(() => {
@@ -53,9 +54,9 @@ const Seoul = () => {
         setSelectedMapName,
       }}
     >
-      <p>
+      <BaseDateText>
         기준 시간: {baseDate} {baseTime}
-      </p>
+      </BaseDateText>
       {showForecast && <Forecasts />}
       <MapSvg
         xmlns='http://www.w3.org/2000/svg'
