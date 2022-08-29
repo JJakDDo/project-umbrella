@@ -31,13 +31,12 @@ export const Wrapper = styled.div`
 `;
 
 export const HourlyContainer = styled.div`
-  top: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 180px;
+  flex: 1;
+  max-width: 180px;
   height: 230px;
   background-color: #1a1a1a;
   border-radius: 20px;
@@ -60,16 +59,16 @@ export const Bar = styled.div`
 
 export const ForecastContainer = styled.div`
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  width: 90vw;
+  width: 80vw;
   height: 250px;
   justify-content: space-around;
   align-items: center;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-flow: wrap;
   z-index: 10;
 `;
 
