@@ -5,6 +5,7 @@ import {
   CloseContainer,
   Title,
   Navigation,
+  Container,
 } from "../styles/Forecast.styled";
 import HourlyForecast from "./HourlyForecast";
 import { IoCloseCircle } from "react-icons/io5";
@@ -90,7 +91,7 @@ const Forecasts = () => {
   }, [fcstData]);
 
   return (
-    <>
+    <Container>
       <Navigation>
         <div onClick={() => showNextRegion(-1)}>
           <MdOutlineNavigateBefore />
@@ -115,7 +116,7 @@ const Forecasts = () => {
       <CloseContainer onClick={showFullMap}>
         <IoCloseCircle style={{ pointerEvents: "none" }} />
       </CloseContainer>
-    </>
+    </Container>
   );
 };
 

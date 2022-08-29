@@ -7,6 +7,10 @@ const disappear = keyframes`
 `;
 
 export const MapSvg = styled.svg`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: #242424;
   overflow: visible;
   height: 630px;

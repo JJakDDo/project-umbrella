@@ -2,25 +2,25 @@ import styled, { keyframes, css } from "styled-components";
 
 const entranceAnimation = keyframes`
   60%{
-    transform: translateY(30px);
+    transform: translateY(-20px);
   }
   70%{
-    transform: translateY(70px);
+    transform: translateY(20px);
   }
   80%{
-    transform: translateY(45px);
+    transform: translateY(-5px);
   }
   90%{
-    transform: translateY(55px);
+    transform: translateY(5px);
   }
   100%{
-    transform: translateY(50px);
+    transform: translateY(0px);
   }
 `;
 
 export const HourlyForecastContainer = styled.div`
   display: flex;
-  width: 90vw;
+  width: 100%;
   justify-content: center;
   align-items: center;
   gap: 20px;
@@ -28,6 +28,14 @@ export const HourlyForecastContainer = styled.div`
 
 export const Wrapper = styled.div`
   position: relative;
+`;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 export const HourlyContainer = styled.div`
@@ -58,13 +66,10 @@ export const Bar = styled.div`
 `;
 
 export const ForecastContainer = styled.div`
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
-  width: 80vw;
-  height: 250px;
+  width: 80%;
+  min-height: 250px;
+  max-height: 550px;
   justify-content: space-around;
   align-items: center;
   gap: 20px;
@@ -73,31 +78,19 @@ export const ForecastContainer = styled.div`
 `;
 
 export const CloseContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 3rem;
   z-index: 10;
   cursor: pointer;
 `;
 
 export const Title = styled.div`
-  position: absolute;
-  top: 180px;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 3rem;
 `;
 
 export const Navigation = styled.div`
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   z-index: 15;
-  width: 80vw;
+  width: 80%;
   justify-content: space-evenly;
   align-items: center;
   cursor: default;
